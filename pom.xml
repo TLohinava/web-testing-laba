@@ -18,12 +18,6 @@
             <artifactId>carina-core</artifactId>
             <version>${carina-version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.6.0</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -37,17 +31,6 @@
                         <source>11</source>
                         <target>11</target>
                         <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M7</version>
-                    <configuration>
-                        <suiteXmlFiles>
-                            <suiteXmlFile>${project.build.directory}/test-classes/suite/${suite}.xml
-                            </suiteXmlFile>
-                        </suiteXmlFiles>
                     </configuration>
                 </plugin>
             </plugins>

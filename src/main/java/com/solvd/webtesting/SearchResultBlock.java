@@ -17,6 +17,9 @@ public class SearchResultBlock extends AbstractUIObject {
     @FindBy(xpath = ".//*[contains(@class, \"product__reviews\")][text()]")
     private ExtendedWebElement productReviews;
 
+    @FindBy(xpath = ".//*[contains(@class, \"product__title-link\")][text()]")
+    private ExtendedWebElement productName;
+
     public SearchResultBlock(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
@@ -35,5 +38,9 @@ public class SearchResultBlock extends AbstractUIObject {
 
     public ExtendedWebElement getProductReviews() {
         return productReviews;
+    }
+
+    public ExtendedWebElement getProductName() {
+        return productName;
     }
 }

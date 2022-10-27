@@ -6,10 +6,15 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class Footer extends AbstractUIObject {
 
-    @FindBy(xpath="//*[@href=\"https://blog.onliner.by/about\"]")
+    @FindBy(xpath = "//*[@href=\"https://blog.onliner.by/about\"]")
     private ExtendedWebElement aboutLink;
+
+    @FindBy(xpath = ".//a[contains(@class, \"footer-style__social-button\")]")
+    private List<ExtendedWebElement> socialButtonList;
 
     public Footer(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
@@ -21,5 +26,9 @@ public class Footer extends AbstractUIObject {
 
     public ExtendedWebElement getAboutLink() {
         return aboutLink;
+    }
+
+    public List<ExtendedWebElement> getSocialButtonList() {
+        return socialButtonList;
     }
 }
