@@ -1,6 +1,7 @@
 package com.solvd.webtesting;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -19,25 +20,28 @@ public class OnlinerTest implements IAbstractTest {
 
         if (searchForm.isUIObjectPresent()) {
             searchForm.typeSearchInput("sony");
-
         }
 
-//        homePage.switchWindow();
         homePage.getDriver().switchTo().frame(homePage.getIframe().getElement());
 
+        searchResultBlockList.forEach(s -> s.clickCheckbox());
+//
 //        SoftAssert sa = new SoftAssert();
 //        searchResultBlockList.forEach(s -> sa.assertTrue(s.getProductImage().isPresent()));
 //        sa.assertAll();
-
-        searchResultBlockList.forEach(s -> s.getCheckBox().check());
-
-        if (searchResultBlockList.stream()
-                .anyMatch(s -> s.getCheckBox().isChecked())) {
-            resultFrame.compareProducts();
-            getDriver().switchTo().defaultContent();
-        }
-
+//
+//        searchResultBlockList.forEach(s -> sa.assertTrue(s.getProductReviews().getText().equals("zz")));
+//        sa.assertAll();
 
         System.out.println();
+    }
+
+    @Test
+    public void openAboutPage() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        Footer footer = homePage.getFooter();
+        footer.clickAboutLink();
+
     }
 }

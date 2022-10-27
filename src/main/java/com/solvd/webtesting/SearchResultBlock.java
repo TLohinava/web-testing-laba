@@ -11,11 +11,18 @@ public class SearchResultBlock extends AbstractUIObject {
     @FindBy(css = "img.product__image")
     private ExtendedWebElement productImage;
 
-    @FindBy(css = "span.i-checkbox__faux")
+    @FindBy(xpath = ".//*[@class=\"product__compare\"]")
     private ExtendedWebElement checkBox;
+
+    @FindBy(xpath = ".//*[contains(@class, \"product__reviews\")][text()]")
+    private ExtendedWebElement productReviews;
 
     public SearchResultBlock(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
+    }
+
+    public void clickCheckbox() {
+        checkBox.check();
     }
 
     public ExtendedWebElement getProductImage() {
@@ -24,5 +31,9 @@ public class SearchResultBlock extends AbstractUIObject {
 
     public ExtendedWebElement getCheckBox() {
         return checkBox;
+    }
+
+    public ExtendedWebElement getProductReviews() {
+        return productReviews;
     }
 }

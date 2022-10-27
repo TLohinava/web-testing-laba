@@ -10,8 +10,11 @@ public class HomePage extends AbstractPage {
     @FindBy(css = "form.fast-search__form")
     private SearchForm searchForm;
 
-    @FindBy(css = "iframe.modal-iframe")
+    @FindBy(xpath = "//*[@class=\"modal-iframe\"]")
     private ExtendedWebElement iframe;
+
+    @FindBy(tagName = "footer")
+    private Footer footer;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -24,5 +27,9 @@ public class HomePage extends AbstractPage {
 
     public ExtendedWebElement getIframe() {
         return iframe;
+    }
+
+    public Footer getFooter() {
+        return footer;
     }
 }
