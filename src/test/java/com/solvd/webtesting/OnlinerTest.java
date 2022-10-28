@@ -2,6 +2,7 @@ package com.solvd.webtesting;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -11,11 +12,10 @@ import java.util.stream.Collectors;
 public class OnlinerTest implements IAbstractTest {
 
     @Test
-    public void openHomePageTest() {
+    public void openHomePageSearchTest() {
         HomePage homePage = new HomePage(getDriver());
         ResultFrame resultFrame = new ResultFrame(getDriver());
         SearchForm searchForm = homePage.getSearchForm();
-        List<SearchResultBlock> searchResultBlockList = resultFrame.getSearchResultBlockList();
         String query = "sony";
 
         homePage.open();
@@ -24,57 +24,63 @@ public class OnlinerTest implements IAbstractTest {
             searchForm.typeSearchInput(query);
         }
 
-        homePage.getDriver().switchTo().frame(homePage.getIframe().getElement());
+        getDriver().switchTo().frame(homePage.getIframe().getElement());
 
-        SoftAssert sa = new SoftAssert();
-        searchResultBlockList.forEach(s -> sa.assertTrue(s.getProductName().getText().contains(query), "Some positions do not contain the query name."));
-        sa.assertAll();
+        resultFrame.getSearchTabs()
+                .forEach(tab -> {
+                    tab.click();
+                    pause(2L);
+                });
 
-        System.out.println();
+        resultFrame.getClosingButton().click();
+        getDriver().switchTo().defaultContent();
     }
 
     @Test
-    public void openAboutPage() {
+    public void openAboutPageTest() {
         HomePage homePage = new HomePage(getDriver());
+        AboutPage aboutPage = new AboutPage(getDriver());
         homePage.open();
         Footer footer = homePage.getFooter();
         footer.clickAboutLink();
+        Assert.assertTrue(homePage.isUrlAsExpected(aboutPage.getPageURL()));
     }
 
     @Test
-    public void checkHomePageHeadings() {
+    public void checkSectionHeadingsTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
 
-        List<String> menuItems = homePage.getTopNavigation().getMenuItemList().stream()
-                .map(i -> i.getText().replaceAll("\"", ""))
-                .collect(Collectors.toList());
-
-        List<ExtendedWebElement> headings = homePage.getSectionHeadingList().stream()
-                .filter(i -> menuItems.contains(i.getText()))
-                .collect(Collectors.toList());
-
         SoftAssert sa = new SoftAssert();
-        sa.assertEquals(menuItems.size(), headings.size());
+
+        for (SectionGrid section : homePage.getSectionGridList()) {
+            ExtendedWebElement heading = section.getSectionHeading();
+            sa.assertTrue(section.isElementWithTextPresent(heading, heading.getText()), "Section does not contain any heading.");
+        }
         sa.assertAll();
     }
 
     @Test
-    public void checkSocialMediaButtons() {
+    public void checkSectionButtonsTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
 
-        Footer footer = homePage.getFooter();
-        List<ExtendedWebElement> smButtonList = footer.getSocialButtonList();
-        int arraySize = smButtonList.size();
-        ExtendedWebElement[] smButtonArray = smButtonList.toArray(new ExtendedWebElement[arraySize]);
+        List<SectionGrid> list = homePage.getSectionGridList();
+        List<ExtendedWebElement> buttons = list.stream()
+                .map(SectionGrid::getNewsButton)
+                .collect(Collectors.toList());
 
-        homePage.clickAny(smButtonArray);
-//        homePage.isUrlAsExpected();
+        int size = buttons.size();
+        ExtendedWebElement[] buttonArray = buttons.toArray(new ExtendedWebElement[size]);
+
+        homePage.clickAny(buttonArray);
+
+        homePage.navigateBack();
+        homePage.isUrlAsExpected(homePage.getPageURL());
     }
 
     @Test
-    public void checkGridByFour() {
+    public void checkGridByFourTest() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
 
@@ -83,10 +89,15 @@ public class OnlinerTest implements IAbstractTest {
                 .map(SectionGrid::getSectionGridByFour)
                 .collect(Collectors.toList());
 
+        SoftAssert sa = new SoftAssert();
+
         for (ExtendedWebElement section : sectionGridByFourList) {
+            int index = sectionGridByFourList.indexOf(section);
+
             section.scrollTo();
 
-            homePage.allElementListsAreNotEmpty(sectionGridList.get(sectionGridByFourList.indexOf(section)).getTeaserList());
+            sa.assertTrue(homePage.allElementsPresent(sectionGridList.get(index).getTeaserArray()), "Section does not contain all the grid elements");
         }
+        sa.assertAll();
     }
 }
