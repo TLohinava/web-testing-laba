@@ -10,16 +10,16 @@ import java.util.List;
 
 public class SectionGrid extends AbstractUIObject {
 
-    @FindBy(xpath = ".//ul[contains(@class, \"b-teasers-2\")]")
+    @FindBy(xpath = ".//ul[contains(@class, 'b-teasers')]")
     private ExtendedWebElement sectionGridByFour;
 
-    @FindBy(xpath = ".//li[@class=\"b-teasers-2__teaser\"]")
+    @FindBy(xpath = ".//li[contains(@class, 'b-teasers')]")
     private List<ExtendedWebElement> teaserList;
 
-    @FindBy(xpath = ".//header[contains(@class, \"b-main-page-blocks-header-2\")]")
+    @FindBy(xpath = ".//header[contains(@class, 'b-main-page-blocks-header')]")
     private ExtendedWebElement sectionHeading;
 
-    @FindBy(xpath = ".//a[@class=\"footer-3-button\"]")
+    @FindBy(xpath = ".//a[contains(@class, 'footer') and contains(@class, 'button')]")
     private ExtendedWebElement newsButton;
 
     public SectionGrid(WebDriver driver, SearchContext searchContext) {

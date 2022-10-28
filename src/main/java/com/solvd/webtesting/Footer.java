@@ -10,11 +10,8 @@ import java.util.List;
 
 public class Footer extends AbstractUIObject {
 
-    @FindBy(xpath = "//*[@href=\"https://blog.onliner.by/about\"]")
+    @FindBy(xpath = "//*[@href='https://blog.onliner.by/about']")
     private ExtendedWebElement aboutLink;
-
-    @FindBy(css = "a.footer-style__social-button")
-    private List<ExtendedWebElement> socialButtonList;
 
     public Footer(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
@@ -26,9 +23,5 @@ public class Footer extends AbstractUIObject {
 
     public ExtendedWebElement getAboutLink() {
         return aboutLink;
-    }
-
-    public List<ExtendedWebElement> getSocialButtonList() {
-        return socialButtonList;
     }
 }

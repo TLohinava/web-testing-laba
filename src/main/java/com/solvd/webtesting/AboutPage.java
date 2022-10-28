@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class AboutPage extends AbstractPage {
 
-    @FindBy(xpath = "//a[@href=\"mailto:info@onliner.by\"]")
+    @FindBy(xpath = "//a[@href='mailto:info@onliner.by']")
     private ExtendedWebElement infoMail;
 
     public AboutPage(WebDriver driver) {

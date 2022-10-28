@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="webtesting-suite" parallel="methods">
+
+    <test name="onliner-test">
+        <classes>
+            <class name="com.solvd.webtesting.OnlinerTest" />
+        </classes>
+    </test>
+
+</suite>

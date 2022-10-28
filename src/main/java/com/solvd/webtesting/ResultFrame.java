@@ -9,10 +9,10 @@ import java.util.List;
 
 public class ResultFrame extends AbstractPage {
 
-    @FindBy(xpath = ".//span[@class=\"search__close\"]")
+    @FindBy(xpath = ".//span[@class='search__close']")
     private ExtendedWebElement closingButton;
 
-    @FindBy(xpath = ".//*[contains(@class, \"search__tabs-item\")]")
+    @FindBy(xpath = ".//*[contains(@class, 'search__tabs-item')]")
     private List<ExtendedWebElement> searchTabs;
 
     public ResultFrame(WebDriver driver) {

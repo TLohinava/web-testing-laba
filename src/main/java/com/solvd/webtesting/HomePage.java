@@ -12,13 +12,13 @@ public class HomePage extends AbstractPage {
     @FindBy(css = "form.fast-search__form")
     private SearchForm searchForm;
 
-    @FindBy(xpath = "//*[@class=\"modal-iframe\"]")
+    @FindBy(xpath = "//*[@class='modal-iframe']")
     private ExtendedWebElement iframe;
 
     @FindBy(tagName = "footer")
     private Footer footer;
 
-    @FindBy(xpath = ".//*[@class=\"b-main-page-grid-4 b-main-page-news-2\"]")
+    @FindBy(xpath = ".//*[contains(@class,'b-main-page-news') and contains(@class, 'b-main-page-grid')]")
     private List<SectionGrid> sectionGridList;
 
     public HomePage(WebDriver driver) {
