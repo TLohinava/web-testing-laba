@@ -3,6 +3,7 @@ package com.solvd.webtesting;
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -11,14 +12,19 @@ import java.util.stream.Collectors;
 
 public class OnlinerTest implements IAbstractTest {
 
+    HomePage homePage;
+
+    @BeforeMethod
+    public void startTest() {
+        homePage = new HomePage(getDriver());
+        homePage.open();
+    }
+
     @Test
     public void openHomePageSearchTest() {
-        HomePage homePage = new HomePage(getDriver());
         ResultFrame resultFrame = new ResultFrame(getDriver());
         SearchForm searchForm = homePage.getSearchForm();
         String query = "sony";
-
-        homePage.open();
 
         if (searchForm.isUIObjectPresent()) {
             searchForm.typeSearchInput(query);
@@ -38,9 +44,7 @@ public class OnlinerTest implements IAbstractTest {
 
     @Test
     public void openAboutPageTest() {
-        HomePage homePage = new HomePage(getDriver());
         AboutPage aboutPage = new AboutPage(getDriver());
-        homePage.open();
         Footer footer = homePage.getFooter();
         footer.clickAboutLink();
         Assert.assertTrue(homePage.isUrlAsExpected(aboutPage.getPageURL()));
@@ -48,9 +52,6 @@ public class OnlinerTest implements IAbstractTest {
 
     @Test
     public void checkSectionHeadingsTest() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.open();
-
         SoftAssert sa = new SoftAssert();
 
         for (SectionGrid section : homePage.getSectionGridList()) {
@@ -62,9 +63,6 @@ public class OnlinerTest implements IAbstractTest {
 
     @Test
     public void checkSectionButtonsTest() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.open();
-
         List<SectionGrid> list = homePage.getSectionGridList();
         List<ExtendedWebElement> buttons = list.stream()
                 .map(SectionGrid::getNewsButton)
@@ -81,9 +79,6 @@ public class OnlinerTest implements IAbstractTest {
 
     @Test
     public void checkGridByFourTest() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.open();
-
         List<SectionGrid> sectionGridList = homePage.getSectionGridList();
         List<ExtendedWebElement> sectionGridByFourList = sectionGridList.stream()
                 .map(SectionGrid::getSectionGridByFour)
